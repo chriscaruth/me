@@ -7,7 +7,7 @@ const App = () => {
     const { scrollY } = useViewportScroll();
     return (
         <div style={{ height: '2000px'}}>
-            <Name first="a" last="a" />
+            <Name first="Chris" last="Caruth" />
         </div>
         
     );

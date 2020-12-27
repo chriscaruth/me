@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import useScrollPosition from '@react-hook/window-scroll';
 import { motion } from 'framer-motion';
-import { Box } from 'rebass';
 import A from './Letters/A';
 import B from './Letters/B';
 import C from './Letters/C';
@@ -20,6 +20,13 @@ interface LetterProps {
 }
 
 const Letter = (props: LetterProps) => {
+    const scrollY = useScrollPosition();
+    const [rotation, setRotation] = useState(0);
+
+    useEffect(() => {
+        setRotation(scrollY / 15)
+    }, [scrollY])
+
     const letter = (letter: string) => {
         switch (letter.toLowerCase()) {
             case 'a':
@@ -45,28 +52,23 @@ const Letter = (props: LetterProps) => {
                 return <U />
         }
     }
+
     return (        
         <motion.div
-            initial={{
-                y: 0,
-                opacity: 0
-            }}
             animate={{
                 y: [0, 25, 0],
                 opacity: [1, 1, 1],
-                scale: [1, 1.025, 1]
+                scale: [.95, 1, .95],
+                rotateZ:  [rotation, rotation, rotation]
             }}
             transition={{
                 loop: Infinity,
-                delay: .1 * props.index,
-                duration: 3
+                delay: scrollY === 0 ? .1 * props.index : 0,
+                duration: scrollY === 0 ? 2 : 2,
+                ease: scrollY === 0 ? 'easeInOut' : 'linear'
             }}
         >
-            <Box
-                p={1}
-            >
-                {letter(props.letter)}
-            </Box>
+            {letter(props.letter)}
         </motion.div>
     );
 }

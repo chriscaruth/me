@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useViewportScroll } from 'framer-motion';
 import { Flex } from 'rebass';
 import Letter from './Letter';
 
@@ -10,19 +11,19 @@ interface NameProps {
 const Name = (props: NameProps) => {
     return (
         <React.Fragment>
-            <Flex>
+            <Flex justifyContent="center">
                 {[...props.first].map((x, i) => 
                     <Letter 
                         letter={x} 
-                        index={i} 
+                        index={i}
                     />
                 )}
             </Flex>
-            <Flex>
+            <Flex justifyContent="center">
                 {[...props.last || []].map((x, i) => 
                     <Letter 
                         letter={x} 
-                        index={i} 
+                        index={i}
                     />
                 )}
             </Flex>

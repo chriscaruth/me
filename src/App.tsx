@@ -4,10 +4,11 @@ import { Flex, Box } from 'rebass';
 import Name from './components/Name/Name';
 
 const App = () => {
-    const { scrollY } = useViewportScroll();
     return (
-        <div style={{ height: '2000px'}}>
-            <Name first="Chris" last="Caruth" />
+        <div style={{ height: '4000px'}}>
+            <div style={{ position: 'fixed', width: '100%', top: '50%', transform: 'translate(0, -60%)' }}>
+                <Name first="Chris" last="Caruth" />
+            </div>
         </div>
         
     );

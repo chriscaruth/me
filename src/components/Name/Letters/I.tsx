@@ -9,6 +9,13 @@ const I = () => {
                 <motion.path 
                     d="M 63.200001 228.899994 H 122.799999 V 348.099991 H 63.200001 V 228.899994 Z" 
                     style={{ fill: 'rgb(231, 193, 87)'}}
+                    animate={{
+                        x: [-10, 10, -10],
+                        transition: {
+                            duration: 5,
+                            repeat: Infinity
+                        }
+                    }}
                 />
 		    </motion.g>
         </motion.svg>

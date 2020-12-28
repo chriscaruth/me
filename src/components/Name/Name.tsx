@@ -10,7 +10,7 @@ interface NameProps {
 
 const Name = (props: NameProps) => {
     return (
-        <React.Fragment>
+        <div>
             <Flex justifyContent="center">
                 {[...props.first].map((x, i) => 
                     <Letter 
@@ -27,7 +27,7 @@ const Name = (props: NameProps) => {
                     />
                 )}
             </Flex>
-        </React.Fragment>
+        </div>
     );
 }
 

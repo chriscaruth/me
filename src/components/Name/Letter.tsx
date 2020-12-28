@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useScrollPosition from '@react-hook/window-scroll';
-import { motion } from 'framer-motion';
+import { motion, useElementScroll, useMotionValue, useTransform, useViewportScroll } from 'framer-motion';
 import A from './Letters/A';
 import B from './Letters/B';
 import C from './Letters/C';
+import D from './Letters/D';
+import E from './Letters/E';
 
 import H from './Letters/H';
 import I from './Letters/I';
@@ -20,12 +22,13 @@ interface LetterProps {
 }
 
 const Letter = (props: LetterProps) => {
-    const scrollY = useScrollPosition();
-    const [rotation, setRotation] = useState(0);
-
-    useEffect(() => {
-        setRotation(scrollY / 15)
-    }, [scrollY])
+    const random = Math.random();
+    const negative = Math.random() >= .5;
+    const { scrollY } = useViewportScroll();    
+    const randomTransformer = useTransform(scrollY, value => value * random * (negative ? -.5 : .5));
+    const scaler = negative ? random : random + 1;
+    const scaleTransformer = useTransform(scrollY, [0, 2000], [1, scaler]);
+    const opacityTransformer = useTransform(scrollY, [0, 2000], [1, 0]);
 
     const letter = (letter: string) => {
         switch (letter.toLowerCase()) {
@@ -35,6 +38,11 @@ const Letter = (props: LetterProps) => {
                 return <B />
             case 'c':
                 return <C />
+            case 'd':
+                return <D />
+            case 'e':
+                return <E />
+
 
             case 'h':
                 return <H />
@@ -53,22 +61,34 @@ const Letter = (props: LetterProps) => {
         }
     }
 
-    return (        
+    return (
         <motion.div
-            animate={{
-                y: [0, 25, 0],
-                opacity: [1, 1, 1],
-                scale: [.95, 1, .95],
-                rotateZ:  [rotation, rotation, rotation]
-            }}
-            transition={{
-                loop: Infinity,
-                delay: scrollY === 0 ? .1 * props.index : 0,
-                duration: scrollY === 0 ? 2 : 2,
-                ease: scrollY === 0 ? 'easeInOut' : 'linear'
+            style={{
+                x: randomTransformer,
+                y: randomTransformer,
+                rotateZ: randomTransformer,
+                scale: scaleTransformer,
+                opacity: opacityTransformer
             }}
         >
-            {letter(props.letter)}
+            <motion.div
+                initial={{
+                    y: 0,
+                    opacity: 0
+                }}
+                animate={{
+                    y: [0, 25, 0],
+                    opacity: [1, 1, 1],
+                    scale: [.95, 1, .95]
+                }}
+                transition={{
+                    loop: Infinity,
+                    delay: .1 * props.index,
+                    duration: 3,
+                }}
+            >
+                {letter(props.letter)}
+            </motion.div>
         </motion.div>
     );
 }

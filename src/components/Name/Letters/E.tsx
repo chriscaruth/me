@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const E = () => {
     return (
-        <motion.svg id="master-artboard" viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="auto">
+        <motion.svg id="master-artboard" viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150px" height="150px">
             <motion.rect id="ee-background" x="0" y="0" width="150" height="150" style={{ fill: 'white', fillOpacity: 0, pointerEvents: 'none'}}/>
             <motion.path 
                 d="M 720.799988 102 H 839.999985 V 146.700001 H 720.799988 V 102 Z"

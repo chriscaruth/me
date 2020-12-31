@@ -33,13 +33,28 @@ interface LetterProps {
 }
 
 const Letter = (props: LetterProps) => {
-    const random = Math.random();
-    const negative = Math.random() >= .5;
-    const { scrollY } = useViewportScroll();    
-    const randomTransformer = useTransform(scrollY, value => value * random * (negative ? -.5 : .5));
-    const scaler = negative ? random : random + 1;
-    const scaleTransformer = useTransform(scrollY, [0, 2000], [1, scaler]);
-    const opacityTransformer = useTransform(scrollY, [0, 2000], [1, 0]);
+    const { scrollY } = useViewportScroll();
+
+    //should have seperate random transformers for x and y
+    const xRandom = Math.random();
+    const xDirectional = xRandom >= .5;
+    const xTransformer = useTransform(scrollY, value => value * xRandom * (xDirectional ? -.5 : .5));
+
+    const yRandom = Math.random();
+    const yDirectional = yRandom >= .5;
+    const yTransformer = useTransform(scrollY, value => value * yRandom * (yDirectional ? -.5 : .5));
+
+    const zRandom = Math.random();
+    const zDirectional = zRandom >= .5;
+    const zTransformer = useTransform(scrollY, value => value * zRandom * (zDirectional ? -.5 : .5));
+
+    //should be random to letter
+    const scalerRandom = Math.random();
+    const scaler = scalerRandom >= .5 ? scalerRandom : scalerRandom + 1;
+    const scaleTransformer = useTransform(scrollY, [0, 1000], [1, scaler]);
+
+    //standard for all
+    const opacityTransformer = useTransform(scrollY, [0, 1000], [1, 0]);
 
     const letter = (letter: string) => {
         switch (letter.toLowerCase()) {
@@ -101,9 +116,9 @@ const Letter = (props: LetterProps) => {
     return (
         <motion.div
             style={{
-                x: randomTransformer,
-                y: randomTransformer,
-                rotateZ: randomTransformer,
+                x: xTransformer,
+                y: yTransformer,
+                rotateZ: zTransformer,
                 scale: scaleTransformer,
                 opacity: opacityTransformer
             }}

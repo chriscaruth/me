@@ -3,6 +3,7 @@ import { Flex } from 'rebass';
 import { AnimatePresence, motion, useTransform, useViewportScroll } from 'framer-motion';
 import Letter from './Letter';
 import Edit from './Edit';
+import Editor from './Editor';
 
 interface NameProps {
     first: string;
@@ -19,19 +20,16 @@ const Name : FunctionComponent<NameProps> = props => {
 
     const [ firstName, setFirstName ] = useState(props.first);
     const [ lastName, setLastName ] = useState(props.last);
-    const firstNameInput = useRef<HTMLInputElement>(null);
-    const lastNameInput = useRef<HTMLInputElement>(null);
 
     const calculateLetterWidth = () : number => {
         const max = Math.max(firstName.length, lastName?.length || 0);
         const letterMultiplier = (props.width || 0) >= 1000 ? .66 : .78;
-        return Math.min(((props.width || 0) / max) * letterMultiplier, 175);
+        return Math.min(((props.width || 0) / max) * letterMultiplier, 180);
     }
 
-    const updateName = () => {
-        let useDefaults = !(firstNameInput.current?.value || lastNameInput.current?.value);
-        setFirstName(firstNameInput.current?.value || (useDefaults ? props.first : ''));
-        setLastName(lastNameInput.current?.value ||  (useDefaults ? props.last : ''));
+    const updateName = (firstName: string, lastName: string, useDefaults: boolean) => {
+        setFirstName(useDefaults ? props.first : firstName);
+        setLastName(useDefaults ? props.last : lastName);
         setEditMode(false);
     }
 
@@ -99,31 +97,7 @@ const Name : FunctionComponent<NameProps> = props => {
             </AnimatePresence>
             <AnimatePresence>
                 {editMode &&
-                    <motion.div layout
-                    initial={{
-                        opacity: 0,
-                        y: 100
-                    }}
-                    animate={{
-                        opacity: [0, 1],
-                        y: [100, 0]
-                    }}
-                    exit={{
-                        opacity: 0,
-                        y: 100
-                    }}
-                    transition={{
-                        duration: .25,
-                        ease: 'easeIn'
-                    }}
-                    >
-                        <Flex justifyContent="center">
-                            <input ref={firstNameInput} type="text" />
-                            <input ref={lastNameInput} type="text" />
-                            <button onClick={updateName} >Update</button>
-                        </Flex>
-                        
-                    </motion.div>
+                    <Editor onUpdate={updateName} />
                 }
             </AnimatePresence>
         </>

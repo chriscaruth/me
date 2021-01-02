@@ -18,7 +18,7 @@ const LetterScaler : FunctionComponent<LetterScalerProps> = props => {
             x={props.x ? `${props.x}px` : "0px"}  
             y={props.y ? `${props.y}px` : "0px"} 
             width={props.width ? `${props.width}px` : "100%"} 
-            height={props.height ? `${props.height}px` : "auto"}
+            height={props.height ? `${props.height}px` : "100%"}
         >
             {props.children}
         </motion.svg>

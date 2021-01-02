@@ -58,8 +58,6 @@ const Letter = (props: LetterProps) => {
     const scaler = scalerRandom >= .5 ? scalerRandom : scalerRandom + 1;
     const scaleTransformer = useTransform(scrollY, [0, 1000], [1, scaler]);
 
-    const opacityTransformer = useTransform(scrollY, [0, 1000], [1, 0]);
-
     const letter = (letter: string) => {
         switch (letter.toLowerCase()) {
             case 'a':
@@ -134,6 +132,7 @@ const Letter = (props: LetterProps) => {
             transition={{
                 delay: .1 * props.index,
                 duration: 1,
+                ease: 'easeIn'
             }}
         >
             <motion.div

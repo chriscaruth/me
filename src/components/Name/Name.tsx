@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Flex } from 'rebass';
 import { AnimatePresence, motion } from 'framer-motion';
+import useScreenDimensions from '../../hooks/useScreenDimensions';
 import Letter from './Letter';
 import Edit from './Edit';
-import useScreenDimensions from '../../hooks/useScreenDimensions';
 
 interface NameProps {
     first: string;
@@ -23,16 +23,16 @@ const Name : FunctionComponent<NameProps> = props => {
     const [ letterWidth, setLetterWidth ] = useState(0);
 
     const updateName = () => {
-        setFirstName(firstNameInput.current?.value || props.first);
-        setLastName(lastNameInput.current?.value || props.last);
+        let useDefaults = !(firstNameInput.current?.value || lastNameInput.current?.value);
+        setFirstName(firstNameInput.current?.value || (useDefaults ? props.first : ''));
+        setLastName(lastNameInput.current?.value ||  (useDefaults ? props.last : ''));
         setEditMode(false);
     }
 
     useEffect(() => {
         const max = Math.max(firstName.length, lastName?.length || 0);
-        const letterMultiplier = (screen.width || 0) >= 1000 ? .66 : .95;
-        setLetterWidth(Math.min(((screen.width || 0) / max) * letterMultiplier, 175)); //letter will be 66% of screen for longest word
-
+        const letterMultiplier = (screen.width || 0) >= 1000 ? .66 : .78;
+        setLetterWidth(Math.min(((screen.width || 0) / max) * letterMultiplier, 175));
     }, [firstName, lastName, screen])
 
     return (
@@ -115,7 +115,6 @@ const Name : FunctionComponent<NameProps> = props => {
                     </motion.div>
                 }
             </AnimatePresence>
-
         </>
     );
 }

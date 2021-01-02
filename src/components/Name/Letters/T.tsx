@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import LetterScaler from './LetterScaler';
+import { AlphaProps } from '../Letter';
 
-const T = () => {
+const T = (props: AlphaProps) => {
     return (
-        <motion.svg id="master-artboard" viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150px" height="150px">
+        <LetterScaler width={props.width}>
            <motion.rect id="ee-background" x="0" y="0" width="150" height="150" style={{ fill: 'white', fillOpacity: 0, pointerEvents: 'none'}}/>
             <motion.g transform="matrix(1, 0, 0, 1, -533.5215454101562, -414.1722717285156)">
                 <motion.path 
@@ -15,7 +17,7 @@ const T = () => {
                 d="M 548.900024 430.399994 H 668.100021 V 482.599995 H 548.900024 V 430.399994 Z" 
                 fill="rgb(3, 191, 215)" 
                 transform="matrix(1, 0, 0, 1, -533.5215454101562, -414.1722717285156)"/>
-        </motion.svg>
+        </LetterScaler>
     );
 }
 

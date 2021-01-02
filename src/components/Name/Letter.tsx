@@ -27,89 +27,93 @@ import X from './Letters/X';
 import Y from './Letters/Y';
 import Z from './Letters/Z';
 
+export interface AlphaProps {
+    width: number
+}
+
 interface LetterProps {
     letter: string;
     index: number;
+    width: number;
 }
 
 const Letter = (props: LetterProps) => {
     const { scrollY } = useViewportScroll();
+    
+    const speed = .9;
 
-    //should have seperate random transformers for x and y
     const xRandom = Math.random();
     const xDirectional = xRandom >= .5;
-    const xTransformer = useTransform(scrollY, value => value * xRandom * (xDirectional ? -.5 : .5));
+    const xTransformer = useTransform(scrollY, value => value * xRandom * (xDirectional ? -speed : speed));
 
     const yRandom = Math.random();
     const yDirectional = yRandom >= .5;
-    const yTransformer = useTransform(scrollY, value => value * yRandom * (yDirectional ? -.5 : .5));
+    const yTransformer = useTransform(scrollY, value => value * yRandom * (yDirectional ? -speed : speed));
 
     const zRandom = Math.random();
     const zDirectional = zRandom >= .5;
-    const zTransformer = useTransform(scrollY, value => value * zRandom * (zDirectional ? -.5 : .5));
+    const zTransformer = useTransform(scrollY, value => value * zRandom * (zDirectional ? -speed : speed));
 
-    //should be random to letter
     const scalerRandom = Math.random();
     const scaler = scalerRandom >= .5 ? scalerRandom : scalerRandom + 1;
     const scaleTransformer = useTransform(scrollY, [0, 1000], [1, scaler]);
 
-    //standard for all
     const opacityTransformer = useTransform(scrollY, [0, 1000], [1, 0]);
 
     const letter = (letter: string) => {
         switch (letter.toLowerCase()) {
             case 'a':
-                return <A />
+                return <A width={props.width} />
             case 'b':
-                return <B />
+                return <B width={props.width} />
             case 'c':
-                return <C />
+                return <C width={props.width} />
             case 'd':
-                return <D />
+                return <D width={props.width} />
             case 'e':
-                return <E />
+                return <E width={props.width} />
             case 'f':
-                return <F />
+                return <F width={props.width} />
             case 'g':
-                return <G />
+                return <G width={props.width} />
             case 'h':
-                return <H />
+                return <H width={props.width} />
             case 'i':
-                return <I />
+                return <I width={props.width} />
             case 'j':
-                return <J />
+                return <J width={props.width} />
             case 'k':
-                return <K />
+                return <K width={props.width} />
             case 'l':
-                return <L />
+                return <L width={props.width} />
             case 'm':
-                return <M />
+                return <M width={props.width} />
             case 'n':
-                return <N />
+                return <N width={props.width} />
             case 'o':
-                return <O />
+                return <O width={props.width} />
             case 'p':
-                return <P />
+                return <P width={props.width} />
             case 'q':
-                return <Q />
+                return <Q width={props.width} />
             case 'r':
-                return <R />
+                return <R width={props.width} />
             case 's':
-                return <S />
+                return <S width={props.width} />
             case 't':
-                return <T />
+                return <T width={props.width} />
             case 'u':
-                return <U />
+                return <U width={props.width} />
             case 'v':
-                return <V />
+                return <V width={props.width} />
             case 'w':
-                return <W />
+                return <W width={props.width} />
             case 'x':
-                return <X />
+                return <X width={props.width} />
             case 'y':
-                return <Y />
+                return <Y width={props.width} />
             case 'z':
-                return <Z />
+                return <Z width={props.width} />
         }
     }
 

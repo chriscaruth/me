@@ -16,7 +16,7 @@ const A = (props: AlphaProps) => {
                     transition: {
                         duration: 8,
                         ease: 'easeInOut',
-                        loop: Infinity
+                        repeat: Infinity
                     }
                 }}
             />

@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Flex } from 'rebass';
-import { AnimatePresence, motion } from 'framer-motion';
-import useScreenDimensions from '../../hooks/useScreenDimensions';
+import { AnimatePresence, motion, useTransform, useViewportScroll } from 'framer-motion';
 import Letter from './Letter';
 import Edit from './Edit';
 
@@ -9,18 +8,25 @@ interface NameProps {
     first: string;
     last?: string;
     allowEdit?: boolean;
+    width: number;
 }
 
 const Name : FunctionComponent<NameProps> = props => {
     const [ editMode, setEditMode ] = useState(false);
-    const screen = useScreenDimensions();
+    
+    const { scrollY } = useViewportScroll();
+    const opacityTransformer = useTransform(scrollY, [0, 1000], [1, 0]);
 
     const [ firstName, setFirstName ] = useState(props.first);
     const [ lastName, setLastName ] = useState(props.last);
     const firstNameInput = useRef<HTMLInputElement>(null);
     const lastNameInput = useRef<HTMLInputElement>(null);
 
-    const [ letterWidth, setLetterWidth ] = useState(0);
+    const calculateLetterWidth = () : number => {
+        const max = Math.max(firstName.length, lastName?.length || 0);
+        const letterMultiplier = (props.width || 0) >= 1000 ? .66 : .78;
+        return Math.min(((props.width || 0) / max) * letterMultiplier, 175);
+    }
 
     const updateName = () => {
         let useDefaults = !(firstNameInput.current?.value || lastNameInput.current?.value);
@@ -29,11 +35,11 @@ const Name : FunctionComponent<NameProps> = props => {
         setEditMode(false);
     }
 
+    const [ letterWidth, setLetterWidth ] = useState(168);
+
     useEffect(() => {
-        const max = Math.max(firstName.length, lastName?.length || 0);
-        const letterMultiplier = (screen.width || 0) >= 1000 ? .66 : .78;
-        setLetterWidth(Math.min(((screen.width || 0) / max) * letterMultiplier, 175));
-    }, [firstName, lastName, screen])
+        setLetterWidth(calculateLetterWidth());
+    }, [firstName, lastName, props.width])
 
     return (
         <>
@@ -43,6 +49,9 @@ const Name : FunctionComponent<NameProps> = props => {
                         initial={{
                             y: -100,
                             opacity: 1
+                        }}
+                        style={{
+                            opacity: opacityTransformer
                         }}
                         transition={{
                             duration: .25,
@@ -60,6 +69,7 @@ const Name : FunctionComponent<NameProps> = props => {
                             <Flex style={{ position: 'relative' }}>
                                 {[...firstName].map((x, i) => 
                                     <Letter
+                                        key={`first-name-letter-${i}`}
                                         width={letterWidth}
                                         letter={x} 
                                         index={i}
@@ -77,6 +87,7 @@ const Name : FunctionComponent<NameProps> = props => {
                         <Flex justifyContent="center">
                             {[...lastName || []].map((x, i) => 
                                 <Letter
+                                    key={`last-name-letter-${i}`}
                                     width={letterWidth}
                                     letter={x} 
                                     index={i}

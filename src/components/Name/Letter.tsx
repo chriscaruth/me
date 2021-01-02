@@ -123,8 +123,7 @@ const Letter = (props: LetterProps) => {
                 x: xTransformer,
                 y: yTransformer,
                 rotateZ: zTransformer,
-                scale: scaleTransformer,
-                opacity: opacityTransformer
+                scale: scaleTransformer
             }}
             initial={{
                 opacity: 0
@@ -146,7 +145,7 @@ const Letter = (props: LetterProps) => {
                     scale: [.95, 1, .95]
                 }}
                 transition={{
-                    loop: Infinity,
+                    repeat: Infinity,
                     delay: .1 * props.index,
                     duration: 3,
                 }}

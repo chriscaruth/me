@@ -5,7 +5,7 @@ interface ScreenDimensions {
     width: number | undefined;
 }
 
-const useScreenDimensions = () => {
+const useScreenDimensions = () : ScreenDimensions => {
     const [windowSize, setWindowSize] = useState<ScreenDimensions>({
         width: undefined,
         height: undefined,

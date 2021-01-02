@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import LetterScaler from './Letters/LetterScaler';
 
@@ -10,12 +10,12 @@ interface EditProps {
 
 const Edit: FunctionComponent<EditProps> = props => {
     const { scrollY } = useViewportScroll();
-    const opacityTransformer = useTransform(scrollY, [0, 50], [1, 0]);
+
+    const opacityTransformer = useTransform(scrollY, [0, 100], [1, 0]);
 
     return (
         <motion.div
             style={{
-                opacity: opacityTransformer,
                 position: 'absolute',
                 right: `-${props.width}px`,
                 top: `-${props.width/2}px`,
@@ -34,6 +34,9 @@ const Edit: FunctionComponent<EditProps> = props => {
         >
             <motion.div
                 onClick={props.onClick}
+                style={{
+                    opacity: opacityTransformer,
+                }}
                 initial={{
                     y: 0
                 }}
@@ -42,7 +45,7 @@ const Edit: FunctionComponent<EditProps> = props => {
                     scale: [.95, 1, .95]
                 }}
                 transition={{
-                    loop: Infinity,
+                    repeat: Infinity,
                     delay: .1 * props.animationDelay,
                     duration: 3,
                 }}

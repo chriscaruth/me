@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Flex } from 'rebass';
 import { AnimatePresence, motion, useTransform, useViewportScroll } from 'framer-motion';
 import Letter from './Letter';
@@ -23,7 +23,7 @@ const Name : FunctionComponent<NameProps> = props => {
 
     const calculateLetterWidth = () : number => {
         const max = Math.max(firstName.length, lastName?.length || 0);
-        const letterMultiplier = (props.width || 0) >= 1000 ? .66 : .78;
+        const letterMultiplier = (props.width || 0) >= 1000 ? .66 : .90;
         return Math.min(((props.width || 0) / max) * letterMultiplier, 180);
     }
 
@@ -33,11 +33,11 @@ const Name : FunctionComponent<NameProps> = props => {
         setEditMode(false);
     }
 
-    const [ letterWidth, setLetterWidth ] = useState(168);
+    const [ letterWidth, setLetterWidth ] = useState(calculateLetterWidth());
 
     useEffect(() => {
         setLetterWidth(calculateLetterWidth());
-    }, [firstName, lastName, props.width])
+    }, [firstName, lastName])
 
     return (
         <>

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import LetterScaler from './Letters/LetterScaler';
+import useScreenDimensions from '../../hooks/useScreenDimensions';
 
 interface EditProps {
     onClick: () => void;
@@ -10,8 +11,9 @@ interface EditProps {
 
 const Edit: FunctionComponent<EditProps> = props => {
     const { scrollY } = useViewportScroll();
+    const screen = useScreenDimensions();
 
-    const opacityTransformer = useTransform(scrollY, [0, 100], [1, 0]);
+    const opacityTransformer = useTransform(scrollY, [0, 50], [1, 0]);
 
     return (
         <motion.div

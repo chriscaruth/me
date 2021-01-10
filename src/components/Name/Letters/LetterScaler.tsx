@@ -7,6 +7,8 @@ interface LetterScalerProps {
     viewBox?: string;
     x?: number;
     y?: number;
+    animation?: object;
+    transition?: object;
 }
 
 const LetterScaler : FunctionComponent<LetterScalerProps> = props => {
@@ -19,6 +21,8 @@ const LetterScaler : FunctionComponent<LetterScalerProps> = props => {
             y={props.y ? `${props.y}px` : "0px"} 
             width={props.width ? `${props.width}px` : "100%"} 
             height={props.height ? `${props.height}px` : "100%"}
+            animate={props.animation}
+            transition={props.transition}
         >
             {props.children}
         </motion.svg>

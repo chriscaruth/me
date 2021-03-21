@@ -19,6 +19,7 @@ const useScreenDimensions = () : ScreenDimensions => {
             });
         }
         
+        // Currently resizing affects when you scroll on mobile
         // window.addEventListener("resize", handleResize);
         handleResize();
         

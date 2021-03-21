@@ -7,14 +7,6 @@ const O = (props: AlphaProps) => {
     return (
         <LetterScaler 
             width={props.width}
-            animation={{
-                rotateZ: [0, 360]
-            }}
-            transition={{
-                repeat: Infinity,
-                duration: 2,
-                ease: 'linear'
-            }}
         >
             <motion.rect id="ee-background" x="0" y="0" width="150" height="150" style={{ fill: 'white', fillOpacity: 0, pointerEvents: 'none'}}/>
             <g transform="matrix(1, 0, 0, 1, -1047.3828125, -211.7368621826172)">
